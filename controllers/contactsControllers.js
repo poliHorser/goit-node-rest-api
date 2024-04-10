@@ -42,7 +42,9 @@ const add = async (req, res) => {
 };
 
 const updateById = async (req, res, next) => {
-    
+        if (!req.body || Object.keys(req.body).length === 0) {
+            return res.status(400).json({ message: 'Body must have at least one field' });
+        }
         const { id } = req.params;
         const result = await contactsService.updateContactId(id, req.body);
         if (!result) {
