@@ -20,17 +20,11 @@ const getAll = async (req, res, next) => {
 };
 
 const getById = async (req, res, next) => {
-    try {
-        const {_id: owner} = req.user
-        const { id } = req.params;
-        const contact = await contactsService.getContactByFilter({owner, _id: id});
-        if (!contact) {
-            throw HttpError(404, 'Contact not found');
-        }
-        res.json(contact);
-    } catch (error) {
-        next(error);
-    }
+    const { _id: owner } = req.user;
+  const { id } = req.params;
+  const result = await contactsService.getContactByFilter({ owner, _id: id });
+  if (!result) throw HttpError(404, `Not found`);
+  res.json(result);
 };
 
 const deleteById = async (req, res) => {
