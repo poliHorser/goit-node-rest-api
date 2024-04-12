@@ -20,8 +20,10 @@ const signup = async (req, res) => {
     const newUser = await authServices.signup({ ...req.body, password: hashPassword });
 
     res.status(201).json({
-        username: newUser.username,
+        "user": {
         email: newUser.email,
+        subscription: newUser.subscription,
+        }
     })
 }
 
@@ -44,18 +46,23 @@ const singin = async (req, res) => {
 
     const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "23h" });
     await authServices.updateUser({ _id: id }, { token });
+    
 
     res.json({
-        token,
-    })
+    token,
+    user: {
+      email: user.email,
+      subscription: user.subscription,
+    },
+  });
 }
 
 const getCurrent = async (req, res) => {
-    const { username, email } = req.user;
+    const { subscription, email } = req.user;
 
     res.json({
-        username,
         email,
+        subscription,
     })
 }
 
@@ -63,9 +70,7 @@ const signout = async (req, res) => {
     const { _id } = req.user;
     await authServices.updateUser({ _id }, { token: "" });
 
-    res.json({
-        message: "Signout success"
-    })
+    res.status(204).json()
 }
 
 export default {

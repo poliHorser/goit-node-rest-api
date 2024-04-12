@@ -9,12 +9,12 @@ import authenticate from "../middlewares/authenticate.js";
 
 const authRouter = express.Router()
 
-authRouter.get("/users/current", authenticate, authControllers.getCurrent);
+authRouter.get("/current", authenticate, authControllers.getCurrent);
 
-authRouter.post("/users/logout", authenticate, authControllers.signout);
+authRouter.post("/logout", authenticate, authControllers.signout);
 
-authRouter.post("/users/register", validateBody(userSignupSchema), authControllers.signup)
+authRouter.post("/register", validateBody(userSignupSchema), authControllers.signup)
 
-authRouter.post("/users/login", validateBody(userSigninSchema), authControllers.singin);
+authRouter.post("/login", validateBody(userSigninSchema), authControllers.singin);
 
 export default authRouter
