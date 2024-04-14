@@ -59,8 +59,9 @@ const updateById = async (req, res, next) => {
 }
 
 const favorite = async (req, res, next) => {
+     const { _id: owner } = req.user;
     const { id } = req.params;
-    const updatedContact = await contactsService.updateStatusContact(id, req.body);
+    const updatedContact = await contactsService.updateStatusContact({ owner, _id: id }, req.body);
 
     if (!updatedContact) {
       return res.status(404).json({ message: "Not found" });
