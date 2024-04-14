@@ -19,7 +19,7 @@ const getAll = async (req, res, next) => {
     }
 };
 
-const getById = async (req, res, next) => {
+const getById = async (req, res) => {
     const { _id: owner } = req.user;
   const { id } = req.params;
   const result = await contactsService.getContactByFilter({ owner, _id: id });

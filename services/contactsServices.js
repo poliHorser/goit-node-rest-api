@@ -7,7 +7,7 @@ export const addContact = (data) => Contact.create(data)
 export const updateStatusContact = (id, data) => Contact.findByIdAndUpdate(id, data);
 
 
-export const getContactByFilter = filter => { Contact.findOne(filter)}
+export const getContactByFilter = filter =>  Contact.findOne(filter)
 
 export const removeContactByFilter = filter => Contact.findOneAndDelete(filter)
 
