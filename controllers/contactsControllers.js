@@ -1,7 +1,11 @@
 import * as contactsService from "../services/contactsServices.js";
 import HttpError from "../helpers/HttpError.js";
-
 import ctrlWrapper from '../decorators/ctrlWrapper.js'
+
+import path from "path"
+import fs from "fs/promises"
+
+const avatarPath = path.resolve("public", "avatars")
 
 const getAll = async (req, res, next) => {
     try {
@@ -39,8 +43,15 @@ const deleteById = async (req, res) => {
 };
 
 const add = async (req, res) => {
-    const {_id: owner} = req.user;
-    const result = await contactsService.addContact({...req.body, owner});
+    const { _id: owner } = req.user;
+
+
+    const { path: oldPath, filename } = req.file;
+    const newPath = path.join(avatarPath, filename);
+    await fs.rename(oldPath, newPath);
+    const avatar = path.join("avatars", filename);
+
+    const result = await contactsService.addContact({...req.body, avatar, owner});
     res.status(201).json(result);
 };
 
