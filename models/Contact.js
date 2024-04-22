@@ -1,5 +1,6 @@
 import { Schema, model } from 'mongoose';
 import { handleSaveError, setUpdateSetting  } from './hooks.js';
+
 const contactSchema = new Schema(
   {
     name: {
@@ -18,6 +19,9 @@ const contactSchema = new Schema(
       type: Boolean,
       default: false,
       required: true
+    },
+    avatar: {
+      type: String,
     },
     owner: {
         type: Schema.Types.ObjectId,
