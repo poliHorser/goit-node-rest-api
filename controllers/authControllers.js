@@ -18,20 +18,21 @@ const avatarPath = path.resolve("public", "avatars")
 
 const signup = async (req, res) => {
     const { email, password } = req.body;
+    
     const user = await authServices.findUser({ email });
     if (user) {
         throw HttpError(409, "Email already in use");
     }
 
     const hashPassword = await bcrypt.hash(password, 10);
-    const avatar = gravatar.url('emerleite@gmail.com', {s: '200', r: 'pg', d: '404'})
-    const newUser = await authServices.signup({ ...req.body, password: hashPassword });
+    const avatarURL = gravatar.url('emerleite@gmail.com', {s: '200', r: 'pg', d: '404'})
+    const newUser = await authServices.signup({ ...req.body, password: hashPassword, avatarURL});
 
     res.status(201).json({
         "user": {
         email: newUser.email,
         subscription: newUser.subscription,
-        avatarURL:  avatar
+        avatarURL:  newUser.avatarURL
         }
     })
 }
@@ -102,7 +103,7 @@ const avatarUpdate = async (req, res) => {
     const avatarURL = path.join('avatars', avatarFileName);
     await authServices.updateAvatar(_id, { avatarURL })
     
-    res.status(200).json({ avatarURL })
+    res.status(200).json({avatarURL})
 }
 
 export default {
