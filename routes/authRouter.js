@@ -18,6 +18,6 @@ authRouter.post("/register", validateBody(userSignupSchema), authControllers.sig
 
 authRouter.post("/login", validateBody(userSigninSchema), authControllers.singin);
 
-authRouter.patch("/avatars", authenticate, upload.single("avatars"), authControllers.avatarUpdate)
+authRouter.patch("/avatars", authenticate, upload.single("avatar"), authControllers.avatarUpdate)
 
 export default authRouter
