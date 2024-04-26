@@ -10,3 +10,7 @@ export const userSigninSchema = Joi.object({
     email: Joi.string().email().pattern(emailRegepxp).required(),
     password: Joi.string().required(),
 });
+
+export const userEmailSchema = Joi.object({
+    email: Joi.string().email().pattern(emailRegepxp).required(),
+})

@@ -7,6 +7,8 @@ import "dotenv/config";
 import authRouter from "./routes/authRouter.js";
 import contactsRouter from "./routes/contactsRouter.js";
 
+
+
 const app = express();
 
 
@@ -38,5 +40,6 @@ mongoose.connect(process.env.DB_HOST)
     console.error(error.message);
     process.exit(1);
   })
+
 
 
